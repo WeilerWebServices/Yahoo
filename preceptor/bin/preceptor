@@ -1,0 +1,153 @@
+#!/usr/bin/env node
+// Copyright 2014, Yahoo! Inc.
+// Copyrights licensed under the Mit License. See the accompanying LICENSE file for terms.
+
+var PreceptorManager = require('../');
+var path = require('path');
+var _ = require('underscore');
+var utils = require('preceptor-core').utils;
+var fs = require('fs');
+
+Error.stackTraceLimit = Infinity;
+
+process.on('uncaughtException', function (err) {
+	console.log(err.stack);
+});
+
+var manager = new PreceptorManager(parseArgs(process.argv));
+manager.run().then(function () {
+	process.exit(0);
+
+}, function (err) {
+	console.log("Error: ", err.stack, "\n");
+
+	if (manager.getConfig().shouldIgnoreErrors()) {
+		process.exit(0);
+	} else {
+		process.exit(1);
+	}
+});
+
+
+/**
+ * Prints the help info
+ *
+ * @method printHelp
+ */
+function printHelp () {
+	console.log("Usage: preceptor [<options>] <config-path>");
+	console.log("");
+	console.log("  Runs tests defined in the config.");
+	console.log("");
+	console.log("  Options:");
+	console.log("    --config <json>     Inline configuration in JSON");
+	console.log("    --profile <p>       Profile of configuration");
+	console.log("    --subprofile <p>    Sub-profile of configuration");
+	console.log("    --version           Print version");
+	console.log("    --help              This help");
+	console.log("");
+}
+
+/**
+ * Parses the arguments and returns the configuration
+ *
+ * @method parseArgs
+ * @param {string[]} argv
+ * @return {object}
+ */
+function parseArgs (argv) {
+
+	var i, argLength = argv.length,
+		config,
+		configLine, configFile,
+		profile, subProfile;
+
+	if (argLength <= 1) {
+		printHelp();
+		process.exit(1);
+	}
+
+	for (i = 2; i < argLength; i++) {
+
+		try {
+
+			if (argv[i] == "--help") {
+				printHelp();
+				process.exit(0);
+
+			} else if (argv[i] == "--version") {
+				console.log("preceptor " + manager.version);
+
+			} else if (argv[i] == "--config") {
+				i++;
+				configLine = JSON.parse(argv[i]);
+
+			} else if (argv[i] == "--profile") {
+				i++;
+				profile = argv[i];
+
+			} else if (argv[i] == "-p") {
+				i++;
+				profile = argv[i];
+
+			} else if (argv[i] == "--subprofile") {
+				i++;
+				subProfile = argv[i];
+
+			} else if (argv[i] == "-s") {
+				i++;
+				subProfile = argv[i];
+
+			} else if (!configFile) {
+
+				// Get path
+				if (argv[i].substr(0, 1) == '/') {
+					configFile = path.resolve(argv[i]);
+				} else {
+					configFile = path.resolve(path.join(process.cwd(), argv[i]));
+				}
+
+			} else {
+				console.log('Warning: parameter "' + argv[i] + '" ignored. Unknown.');
+			}
+
+		} catch (exception) {
+			var reason = (exception.message !== '') ? "; " + exception.message : '';
+			throw new Error("Invalid argument '" + argv[i] + "' for " + argv[i - 1] + reason);
+		}
+	}
+
+	if (!configFile) {
+		configFile = path.resolve(path.join(process.cwd(), 'rule-book'));
+	}
+
+	configFile = require(configFile);
+	if (_.isFunction(configFile)) {
+		configFile = configFile();
+	}
+
+	config = utils.deepExtend({}, [configFile || {}]);
+
+	// Profile
+	if (profile) {
+		if (config[profile]) {
+			config = config[profile];
+		} else {
+			throw new Error('Could not find profile "' + profile + '"');
+		}
+	}
+
+	// Sub-Profile
+	if (subProfile) {
+		if (config.tasks[subProfile]) {
+			config.tasks = config.tasks[subProfile];
+		} else {
+			throw new Error('Could not find sub-profile "' + subProfile + '"');
+		}
+	}
+
+	config = utils.deepExtend({}, [config, configLine || {}]);
+
+	return config;
+}
+

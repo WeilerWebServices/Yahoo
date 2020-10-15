@@ -1,0 +1,9 @@
+github:
+  settings:
+    ghe_host: 'opensource.git.corp.yahoo.com'
+    ghe_token: 'dummy ghe token'
+    github_token: 'dummy github token'
+    git_dir: '/tmp'
+  repos:
+    - git/git
+    - resque/resque

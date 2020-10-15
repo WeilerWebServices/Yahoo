@@ -1,0 +1,10 @@
+{{/* .In needs to be set to the Referer header value! */}}
+
+{{ define "title" }}Unfiltered echoing of injection into Referer header (refer.1){{end}}
+
+<!doctype html><html><head><title>{{ template "title" }}</title></head><body>
+
+You have arrived following the referal of the site: {{.InRaw}} (unescaped version: {{.In}})
+
+</body></html>
+

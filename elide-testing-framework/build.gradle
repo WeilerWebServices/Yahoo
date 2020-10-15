@@ -1,0 +1,150 @@
+plugins {
+    id "idea"
+    id "antlr"
+    id "jacoco"
+    id "checkstyle"
+
+    id "nebula.project" version "3.0.4"
+    id "nebula.nebula-release" version "4.0.1"
+
+    id "org.standardout.versioneye" version "1.2.0"
+    id "com.jfrog.bintray" version "1.6"
+}
+
+group = "com.yahoo.elide"
+description = "Elide Security Testing Framework"
+
+contacts {
+    "clayreimann@yahoo-inc.com" {
+        moniker "Clay Reimann"
+        github "clayreimann"
+    }
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    antlr "org.antlr:antlr4:[4.5,5)"
+
+    String elideVersion = "[2.0,3.0)"
+    compile(group: "com.yahoo.elide", name: "elide-annotations", version: elideVersion) {
+        exclude(module: "commons-logging")
+    }
+    compile(group: "com.yahoo.elide", name: "elide-core", version: elideVersion) {
+        exclude(module: "commons-logging")
+    }
+    compile "com.fasterxml.jackson.core:jackson-databind:2.6.3"
+    compile "info.cukes:cucumber-java:1.2.4"
+    compile "javax.persistence:persistence-api:1.0.2"
+    compile "org.projectlombok:lombok:1.16.8"
+    compile "org.slf4j:slf4j-api:1.7.19"
+
+    String logbackVersion = "[1.1.3,2.0)"
+    testCompile "ch.qos.logback:logback-classic:${logbackVersion}"
+    testCompile "ch.qos.logback:logback-core:${logbackVersion}"
+    testCompile "commons-net:commons-net:[3.3,4)"
+    testCompile "org.apache.commons:commons-dbcp2:[2.0.1,3)"
+    testCompile "org.glassfish.jersey.core:jersey-server:[2.22,3)"
+    testCompile "org.mockito:mockito-all:[1.10,2)"
+    testCompile "uk.com.robust-it:cloning:[1.9.2,2)"
+    testCompile(group: "org.testng", name: "testng", version:"[6.8,7)") {
+        exclude(module: "junit")
+    }
+    testCompile(group: "com.yahoo.elide", name: "elide-datastore-hibernate3", version: elideVersion) {
+        exclude(module: "elide-core")
+        exclude(module: "commons-collections")
+    }
+}
+
+generateGrammarSource {
+    arguments += ["-visitor", "-no-listener"]
+}
+
+checkstyle {
+    File configDir = new File(buildscript.sourceFile.parentFile, "config")
+    configProperties.checkstyleConfigDir = "$configDir/checkstyle"
+}
+
+test {
+    useTestNG()
+
+    // fix for https://issues.gradle.org/browse/GRADLE-1682
+    scanForTestClasses = false
+    include "**/*Test.class"
+
+    maxHeapSize = "1g"
+
+    boolean didDisplayMessage = false
+    beforeSuite { descriptor ->
+        if (!didDisplayMessage) {
+            didDisplayMessage = true
+            logger.lifecycle("Setting up tests...")
+        }
+    }
+
+    afterTest { descriptor, result ->
+        if (result.getSuccessfulTestCount() > 0) {
+            long duration = result.getEndTime() - result.getStartTime()
+            logger.lifecycle("Test ${descriptor.getName()}: PASS (${duration}ms)")
+        }
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
+
+versioneye {
+    exclude "checkstyle", "compileTestJava", "jacoco"
+}
+
+check {
+    dependsOn versionEyeUpdate
+    dependsOn jacocoTestReport
+}
+
+tasks.release {
+    dependsOn build
+    finalizedBy publish
+}
+
+nebulaRelease {
+    releaseBranchPatterns = [/.*/]
+}
+
+// see https://github.com/bintray/gradle-bintray-plugin
+// and https://github.com/bintray/bintray-examples/blob/master/gradle-bintray-plugin-examples/publications-example/build.gradle
+bintray {
+    user = System.getenv("BINTRAY_USER")
+    key = System.getenv("BINTRAY_API_KEY")
+    publications = ["nebula"]
+
+    pkg {
+        repo = "maven"
+        name = "elide-testing-framework"
+        userOrg = "yahoo"
+
+        licenses = ["Apache-2.0"]
+        vcsUrl = "https://github.com/yahoo/elide-testing-framework.git"
+        githubRepo = 'yahoo/elide-testing-framework'
+
+        version {
+            name = project.version
+
+            mavenCentralSync {
+                sync = true
+                user = System.getenv("OSS_USER_NAME")
+                password = System.getenv("OSS_USER_SECRET")
+            }
+        }
+    }
+}

@@ -1,0 +1,328 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "The multipleType API",
+        "version": "1"
+    },
+    "basePath": "/multipleType/v1",
+    "schemes": [],
+    "paths": {
+        "/post/{id}": {
+            "post": {
+                "tags": [
+                    "String"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "flag",
+                        "in": "query",
+                        "type": "boolean",
+                        "required": true
+                    },
+                    {
+                        "name": "quantity",
+                        "in": "query",
+                        "type": "integer",
+                        "format": "int32",
+                        "required": true
+                    },
+                    {
+                        "name": "request",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/Request"
+                        },
+                        "required": true
+                    },
+                    {
+                        "name": "wssid",
+                        "in": "header",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ResourceError"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/ResourceError"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/ResourceError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/ResourceError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ResourceError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Order": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": ""
+                }
+            },
+            "required": [
+                "name"
+            ]
+        },
+        "ParsecErrorBody": {
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "detail": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ParsecErrorDetail"
+                    }
+                }
+            },
+            "required": [
+                "message"
+            ]
+        },
+        "ParsecErrorDetail": {
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "invalidValue": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message"
+            ]
+        },
+        "ParsecResourceError": {
+            "properties": {
+                "error": {
+                    "$ref": "#/definitions/ParsecErrorBody"
+                }
+            },
+            "required": [
+                "error"
+            ]
+        },
+        "Property": {
+            "type": "string",
+            "enum": [
+                "AUCTION",
+                "MALL",
+                "SHOPPING",
+                "NEVEC"
+            ]
+        },
+        "Request": {
+            "properties": {
+                "reqProperty": {
+                    "$ref": "#/definitions/Property"
+                },
+                "reqProperties": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Property"
+                    }
+                },
+                "reqUserId": {
+                    "type": "string",
+                    "example": ""
+                },
+                "reqUserIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": ""
+                    }
+                },
+                "reqOrder": {
+                    "$ref": "#/definitions/Order"
+                },
+                "reqOrders": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Order"
+                    }
+                },
+                "reqRecommendFuture": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "reqRecommendFutures": {
+                    "type": "array",
+                    "items": {
+                        "type": "boolean",
+                        "example": false
+                    }
+                },
+                "reqNum": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 0
+                },
+                "reqNums": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 0
+                    }
+                }
+            },
+            "required": [
+                "reqProperty",
+                "reqProperties",
+                "reqUserId",
+                "reqUserIds",
+                "reqOrder",
+                "reqOrders",
+                "reqRecommendFuture",
+                "reqRecommendFutures",
+                "reqNum",
+                "reqNums"
+            ]
+        },
+        "ResizedImageMap": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "string"
+            }
+        },
+        "ResourceError": {
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "code",
+                "message"
+            ]
+        },
+        "Response": {
+            "properties": {
+                "respProperty": {
+                    "$ref": "#/definitions/Property"
+                },
+                "respProperties": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Property"
+                    }
+                },
+                "respUserId": {
+                    "type": "string",
+                    "example": ""
+                },
+                "respUserIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": ""
+                    }
+                },
+                "respOrder": {
+                    "$ref": "#/definitions/Order"
+                },
+                "respOrders": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Order"
+                    }
+                },
+                "respRecommendFuture": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "respRecommendFutures": {
+                    "type": "array",
+                    "items": {
+                        "type": "boolean",
+                        "example": false
+                    }
+                },
+                "respNum": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 0
+                },
+                "respNums": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 0
+                    }
+                },
+                "resizedImages": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ResizedImageMap"
+                    }
+                }
+            },
+            "required": [
+                "respProperty",
+                "respProperties",
+                "respUserId",
+                "respUserIds",
+                "respOrder",
+                "respOrders",
+                "respRecommendFuture",
+                "respRecommendFutures",
+                "respNum",
+                "respNums",
+                "resizedImages"
+            ]
+        }
+    }
+}

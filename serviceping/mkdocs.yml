@@ -1,0 +1,60 @@
+extra:
+    config_override: false
+    doc_owner: Verizon Media Python Language Platform Team
+    doc_owner_shortid: python
+
+extra_css: []
+
+markdown_extensions:
+    - admonition
+    - codehilite
+    - markdown_include.include:
+        base_path: docs
+    - pymdownx.arithmatex
+    - pymdownx.betterem:
+        smart_enable: all
+    - pymdownx.caret
+    - pymdownx.critic
+    - pymdownx.details
+    - pymdownx.inlinehilite
+    - pymdownx.magiclink
+    - pymdownx.mark
+    - pymdownx.smartsymbols
+    - pymdownx.superfences
+    - pymdownx.tasklist:
+        custom_checkbox: true
+    - pymdownx.tilde
+    - toc:
+        permalink: true
+        toc_depth: 4
+
+nav:
+    - Install: install.md
+    - Usage: usage.md
+    - Examples: examples.md
+    - Changelog: changelog.md
+    - Developer Resources:
+        - Code Documentation: sphinxindex.html
+    - License: license.txt
+
+plugins:
+    - search
+
+theme:
+    name: material
+    highlightjs: true
+    hljs_language:
+        - yaml
+        - toml
+        - python
+        - console
+        - bash
+
+remote_branch: gh-pages
+remote_name: origin
+repo_name: GitHub
+repo_url: https://github.com/yahoo/serviceping
+site_description: Serviceping Network troubleshooting utility
+site_name: Serviceping
+strict: false
+use_directory_urls: true

@@ -1,0 +1,14 @@
+[
+    {
+        "settings": ["master"],
+
+        "title_key": "YRB_YAHOO_2nd",
+        "data-url": "http://service.yahoo.com",
+        "logo": "yahoo.png",
+        "links": {
+            "home": "http://www.yahoo.com",
+            "mail": "http://mail.yahoo.com"
+        },
+        "__ycb_source__": "tests/fixtures/simple-2.json"
+    }
+]

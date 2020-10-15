@@ -1,0 +1,182 @@
+#!/usr/bin/env python
+"""
+This provides a command that can be run from the shebang line of a script
+that will find an appropriate python interpreter to run a python script.
+
+This is similar to /usr/bin/env but also allows specifying the version of python
+and python modules that are required.
+
+This needs to be installed in a fixed well known location because the
+#! line does not do path expansion.  We currently recommend /usr/bin
+
+Example:
+    Run command with a python2.6 interpreter that has both the foo and
+    bar modules:
+        #!/usr/bin/python_shebang version:2.6 module:foo module:bar
+
+    Run command with a python 3 interpreter that has the paramiko module:
+        #!/usr/bin/python_shebang version:3 module:paramiko
+"""
+# Copyright (c) 2014-2015 Yahoo! Inc. All rights reserved.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License. See accompanying LICENSE file.
+import os
+import sys
+
+
+# Globals
+
+# Directories to search
+SEARCH_DIRECTORIES = os.environ['PATH'].split(os.pathsep)
+
+
+def __generate_versions():
+    versions = []
+    for major in range(2, 4):
+        for minor in range(0, 10):
+            versions.append('%s.%s' % (major, minor))
+    return versions
+
+
+def __populate_interpreters():
+    interpreters = {}
+    for ver in __generate_versions():
+        interpreters[ver] = [
+            '%s/python%s' % (path, ver) for path in SEARCH_DIRECTORIES
+        ]
+
+    # ENV search path
+    interpreters['2.6'] += __path_python('python2.6')
+    interpreters['2.7'] += __path_python('python2.7')
+    interpreters['3.4'] += __path_python('python3.4')
+    interpreters['3.5'] += __path_python('python3.5')
+
+    # Generate a list for major version numbers
+    interpreters['2'] = []
+    interpreters['3'] = []
+    for key, value in interpreters.items():
+        if key.startswith('2'):
+            interpreters['2'] += value
+
+    for key, value in interpreters.items():
+        if key.startswith('3'):
+            interpreters['3'] += value
+
+    # Add a value for all that includes everything
+    interpreters['all'] = interpreters['2'] + \
+        interpreters['3'] + __path_python('python')
+
+    return interpreters
+
+
+def __path_python(filename):
+    """
+    Generate an interpreter list from the sys.path
+    @param filename:
+    @return:
+    """
+    search_list = []
+    for p in sys.path:
+        if p:
+            search_list.append(os.path.join(p, filename))
+    return search_list
+
+
+class ModuleNotFound(Exception):
+    """ Exception class if a module is not found """
+    pass
+
+
+class PythonNotFound(Exception):
+    """ Exception class called if a python interpreter is not found """
+    pass
+
+
+# noinspection PyShadowingNames
+def __check_python_interpreter_modules(path, modules):
+    """
+       Check the python interpreter for required modules
+    """
+    for module in modules:
+        result = os.popen(
+            '%s -Wignore -c "import %s" 2>&1' % (path, module)).readlines()
+        if result:
+            if result[-1].startswith('ImportError:'):
+                raise ModuleNotFound(
+                    'Interpreter %s no module %s' % (path, module))
+            else:
+                raise Exception('Unexpected import error: %s' % result)
+
+
+# noinspection PyShadowingNames
+def __search_for_interpreters(version, modules, python_interpreters=None):
+    found = False
+    interpreter = None
+    if not python_interpreters:
+        python_interpreters = __populate_interpreters()
+    for interpreter in python_interpreters[version]:
+        interpreter = os.path.expanduser(interpreter)
+        if os.path.exists(interpreter):
+            try:
+                __check_python_interpreter_modules(interpreter, modules)
+                found = True
+                break
+            except ModuleNotFound:
+                pass
+    if not found:
+        raise PythonNotFound('No usable python interpreters found')
+    return interpreter
+
+
+if __name__ == "__main__":
+    # Parse command line arguments, note we have to run on multiple python
+    # versions so we don't use optparse/argparse
+    command_args = []
+    version = "all"
+    virtualenv = None
+    modules = []
+    findpython_args = True
+    python_interpreters = __populate_interpreters()
+
+    # For some reason the shebang gives us some arguments with spaces in them
+    # so put things together and split them on spaces to get all the arguments
+    # split properly
+    for arg in ' '.join(sys.argv[1:]).split():
+        if not findpython_args:
+            command_args.append(arg)
+        elif arg.startswith('python_module:') or arg.startswith('module:'):
+            t = arg.replace(
+                'python_module:', '').replace('module:', '').strip()
+            if t:
+                modules.append(t)
+        elif arg.startswith('python_version:') or arg.startswith('version:'):
+            t = arg.replace(
+                'python_version:', '').replace('version:', '').strip()
+            if t in python_interpreters.keys():
+                version = t.strip()
+        elif arg.startswith('python_virtualenv:') or arg.startswith('virtualenv:'):
+            virtualenv = arg.replace(
+                'python_virtualenv:', '').replace('virtualenv:', '')
+        else:
+            findpython_args = False
+            command_args.append(arg)
+
+    if virtualenv:
+        interpreter = '. ' + os.path.join(virtualenv, 'bin/activate') + ';' + os.path.join(virtualenv, 'bin/python')
+    else:
+        interpreter = __search_for_interpreters(
+            version, modules, python_interpreters=python_interpreters
+        )
+    command = '%s %s' % (interpreter, ' '.join(command_args))
+    rc = os.system(command) >> 8
+
+    sys.exit(rc)

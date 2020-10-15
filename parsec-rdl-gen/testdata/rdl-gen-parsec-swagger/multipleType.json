@@ -1,0 +1,232 @@
+{
+    "namespace": "com.example",
+    "name": "multipleType",
+    "version": 1,
+    "types": [
+        {
+            "EnumTypeDef": {
+                "type": "Enum",
+                "name": "Property",
+                "elements": [
+                    {
+                        "symbol": "AUCTION",
+                        "comment": "TW Auctions"
+                    },
+                    {
+                        "symbol": "MALL",
+                        "comment": "TW MarketPlace"
+                    },
+                    {
+                        "symbol": "SHOPPING",
+                        "comment": "TW Shopping"
+                    },
+                    {
+                        "symbol": "NEVEC",
+                        "comment": "TW NEVEC"
+                    }
+                ]
+            }
+        },
+        {
+            "StructTypeDef": {
+                "type": "Struct",
+                "name": "Order",
+                "annotations": {
+                    "x_object": ""
+                },
+                "fields": [
+                    {
+                        "name": "name",
+                        "type": "String"
+                    }
+                ]
+            }
+        },
+        {
+            "MapTypeDef": {
+                "type": "Map",
+                "name": "ResizedImageMap",
+                "keys": "String",
+                "items": "String"
+            }
+        },
+        {
+            "StructTypeDef": {
+                "type": "Struct",
+                "name": "Response",
+                "fields": [
+                    {
+                        "name": "respProperty",
+                        "type": "Property",
+                        "annotations": {
+                            "x_not_null": ""
+                        }
+                    },
+                    {
+                        "name": "respProperties",
+                        "type": "Array",
+                        "items": "Property"
+                    },
+                    {
+                        "name": "respUserId",
+                        "type": "String"
+                    },
+                    {
+                        "name": "respUserIds",
+                        "type": "Array",
+                        "items": "String"
+                    },
+                    {
+                        "name": "respOrder",
+                        "type": "Order",
+                        "annotations": {
+                            "x_must_validate": "",
+                            "x_not_null": ""
+                        }
+                    },
+                    {
+                        "name": "respOrders",
+                        "type": "Array",
+                        "items": "Order"
+                    },
+                    {
+                        "name": "respRecommendFuture",
+                        "type": "Bool"
+                    },
+                    {
+                        "name": "respRecommendFutures",
+                        "type": "Array",
+                        "items": "Bool"
+                    },
+                    {
+                        "name": "respNum",
+                        "type": "Int32"
+                    },
+                    {
+                        "name": "respNums",
+                        "type": "Array",
+                        "items": "Int32"
+                    },
+                    {
+                        "name": "resizedImages",
+                        "type": "Array",
+                        "items": "ResizedImageMap"
+                    }
+                ]
+            }
+        },
+        {
+            "StructTypeDef": {
+                "type": "Struct",
+                "name": "Request",
+                "fields": [
+                    {
+                        "name": "reqProperty",
+                        "type": "Property",
+                        "annotations": {
+                            "x_not_null": ""
+                        }
+                    },
+                    {
+                        "name": "reqProperties",
+                        "type": "Array",
+                        "items": "Property"
+                    },
+                    {
+                        "name": "reqUserId",
+                        "type": "String"
+                    },
+                    {
+                        "name": "reqUserIds",
+                        "type": "Array",
+                        "items": "String"
+                    },
+                    {
+                        "name": "reqOrder",
+                        "type": "Order",
+                        "annotations": {
+                            "x_must_validate": "",
+                            "x_not_null": ""
+                        }
+                    },
+                    {
+                        "name": "reqOrders",
+                        "type": "Array",
+                        "items": "Order"
+                    },
+                    {
+                        "name": "reqRecommendFuture",
+                        "type": "Bool"
+                    },
+                    {
+                        "name": "reqRecommendFutures",
+                        "type": "Array",
+                        "items": "Bool"
+                    },
+                    {
+                        "name": "reqNum",
+                        "type": "Int32"
+                    },
+                    {
+                        "name": "reqNums",
+                        "type": "Array",
+                        "items": "Int32"
+                    }
+                ]
+            }
+        }
+    ],
+    "resources": [
+        {
+            "type": "String",
+            "method": "POST",
+            "path": "/post/{id}",
+            "inputs": [
+                {
+                    "name": "id",
+                    "type": "String",
+                    "pathParam": true,
+                    "optional": true
+                },
+                {
+                    "name": "flag",
+                    "type": "bool",
+                    "queryParam": "flag"
+                },
+                {
+                    "name": "quantity",
+                    "type": "int32",
+                    "queryParam": "quantity"
+                },
+                {
+                    "name": "request",
+                    "type": "Request"
+                },
+                {
+                    "name": "wssid",
+                    "type": "String",
+                    "header": "wssid"
+                }
+            ],
+            "expected": "OK",
+            "exceptions": {
+                "BAD_REQUEST": {
+                    "type": "ResourceError"
+                },
+                "FORBIDDEN": {
+                    "type": "ResourceError"
+                },
+                "INTERNAL_SERVER_ERROR": {
+                    "type": "ResourceError"
+                },
+                "NOT_FOUND": {
+                    "type": "ResourceError"
+                },
+                "UNAUTHORIZED": {
+                    "type": "ResourceError"
+                }
+            },
+            "name": "getId"
+        }
+    ]
+}

@@ -1,0 +1,80 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "type": "child",
+      "attributes": {
+        "firstName": "Gavino",
+        "lastName": "Bonham",
+        "age": 6,
+        "deceased": false
+      },
+      "relationships": {
+        "parents": {
+          "data": [
+            {
+              "id": "1",
+              "type": "parent"
+            },
+            {
+              "id": "2",
+              "type": "parent"
+            }
+          ]
+        },
+        "playmates": {
+          "data": [
+            {
+              "id": "2",
+              "type": "child"
+            },
+            {
+              "id": "3",
+              "type": "child"
+            },
+            {
+              "id": "4",
+              "type": "child"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "2",
+      "type": "child",
+      "attributes": {
+        "firstName": "Payton",
+        "lastName": "Bonham",
+        "age": 4,
+        "deceased": false
+      },
+      "relationships": {
+        "parents": {
+          "data": [
+            {
+              "id": "1",
+              "type": "parent"
+            },
+            {
+              "id": "2",
+              "type": "parent"
+            }
+          ]
+        },
+        "playmates": {
+          "data": [
+            {
+              "id": "1",
+              "type": "child"
+            },
+            {
+              "id": "4",
+              "type": "child"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

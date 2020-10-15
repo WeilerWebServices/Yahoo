@@ -1,0 +1,25 @@
+---
+    language: java
+    jdk: [oraclejdk8]
+    branches:
+      only:
+          - master
+          - /v\d+\.\d+\.\d+(-.*)?/
+    env:
+        global:
+            - secure: xDvo6ue0/w/D9eJ6q256vfbvtKxGX2bxTqLBa+U9RHw/z+C5S/iPg8Z+cgwln8WO3eO0Mbi8niYuOrZU3dm1q1GI9blt7AVXLwyeGC4nc3UQOJoaFBGGhbrnvQa5U53nStFu6vGwVF1inrXOZfERNlL1iVmjhMZ3YmcSXq2rFe5iNhhwmXINzJkSr89Kfljoj9BI09itSQlNFNXzB7UidqVdO93YrvuFcyBfFidEjZAVGZeYVNY7Cu1BOQa07iPOyMQx0xI5t6HeBoFNRkG0TyP4ZYsG4JRqcTr0+gaCLCmf/oAv6kZLQWoMOnxSYpR92z5bX56HgLw8fwDamOuGqEwp1OSvHbbdar0ETXZ/ozroc2huAJxYh7vhYBcPb+E4FOZ6XdLEhGcj4Oxxl9XuwbHZJ3IKVCAkfMI38HfJqBYDIzxkOCegNKa3ObgDd/R5os7VkfzlE1RenbL/j3wJWa3zeGp7trA5iNYDksDyXOmZm2vyi8lUOobMfoY1Wca086XRaQK0Bjo8WzNk+PNHa05MGc7RogdP3EZLtOKIKJ1UnT1B+ueIZGhp74K6T7aqlMvI0mcxXgJYIMfZkEOOf3c4M5PxUGKXVa5uJTuAiN8OE/TNnk1p7Y/mZ3Le6mpohcZAtopw1PmXZytA8PGqFk5REsfuV8bHEUBWmJuP59o= # VERSIONEYE_API_KEY
+            - secure: MD2DgOHLzjQlvTcEBhj0d2j4+f/qQ+b9GpsJd8bU2x6iXFJoyhRe/llFGsOJtX9NYhhoFpRcvd689IgDBar78f8SQkvwZDaNjZUnClRzFQWgnCNqqLs7VrCF8jDVtyoTuJxnS5nb5y8AaO491bXoWaQbUhUPqh0VY8FSQGSsx0kThhlfxvLGNwpAKUyTD8VZVzLcX47uB3lcWdLNYQGYwHd9j3oO5wHrwCbBeOalNqvyWd36x2qJJACuuQ76Y1/ZEqolgNX+tLRbLKCzqIe8B/BNiOCE4oX04Ym+if4Z2GtGymvq0zLj3S9747b/MDzEkDw/ynQcmTx5X8moxVCNE7tvFxudbDBg+pUkZeloer23jzwW5pK8M6xyXn8iTw5xo212Z+Y3MilVSnF6TA86EJo9bkFHaRPFAmYo743itb+O6Jl9D09s4AzPNd6++NauKfR9pcYeSr9r0O4/ETZQwnQje278SAlAnBRBwabQGW5IRRYdFqhX6ershqe95DOmBE3KkQTAlGhsOUM1x2bfpDTuC3LVNVHP5+xA7Z6h9g+/7ffAtA8LptF47WFKn5naNUtiIa9XeychWi1p7C0vOLJqMfyjZPPWVMwiAqKkp5QjA4kEtOwl6zo2YFy5z0Qv1Bcwho2x7F+TO6yfPgckSMnkOhn9LCNy1kB7S8HTxkI= # BINTRAY_USER
+            - secure: rF5kBFvQBNbnaxGrWmt1k7D3bVJPPMdYUUkHN8gRnq7GOVXH/A+MNoOlMDFwDIJScWTVGMgAi07xqWw2CUisIqbYWM0zTb+XsvNxOowArMsWcv0AtlBFxwjZUB/f+qjBbkEdwk41K99Of7r6LcdY+KVXx6a4DiaN8oApMDnb+DMXIgHwXmddp6BI103/9MqKo779w8w/0B4gtO3xG/DxrGlJgjHBzvRyhIAd/8wrHaBu8z6SmBhy1PIAMaKO7Ip2HKmaAJnER4qCR4Vabk7t3LJoqu245d7kihwYQuXzWfpicypG6FGv8Ow/qS1IjJqVhXTiFOWJlE+RTsQ7HjRdcjnUAKXfmg0kBvd62L7mylUsFOgMvTRuk8nrZXlKpJbY1NHiL6Yz1rK/3v04niABX/+fIpx4TyE1UgUckib8lwrGb5WWZ7++FFAFOpfatpsmiIkC6LAl6qVE3bRBQOQ8lUb9AJOjUMJS3Pn+ZhGbXiPVEH32ICBfbbKzP+Hj//s/axjFYeKH2JeLK977BFCCXw1dUhuCqB4BPy+58bj4rLhL8u0DYeKT+4NeJpO3za3QWrYfKj8JTteAFqurveNWLIhntl6/jxJ5kwippFAcL2nKGi7DEKR6l6p6WskPYD+XcaJhhnF6LRnq4BffnFgbvvyElUFsvsNc/+q1NYolo0w= # BINTRAY_API_KEY
+            - secure: SefPAuYGUyhS++/5QOyTc9c5akVzJjFB6aJxti0zdT+Mio09WVm6SWOqCaHlzpRlpfjBM4FA6uCL6x9Klf+UFX6HyUwyH8XPqA+hCdsOpHYGSLG0eH+rFEfYiKpu2FDYBeUfMwKKXzlQLhNGaehX9t1DqPTcOOVb/VQkX/gPmn5Z8P7U+K3555yFe8d4XFDr9/mpc+8IXdC8k7CK1RYFtyGoyBGNQidotkOkaTcMlkqJDZe20sTfF5sngU/FigU0C+wLuMfgTAjR64jww8rdFnwv+tCPjDjkeb2v8B2s7cemSDA8OKrhpeCQOgB2MChSrljQ0KBwNYJI88qDkUtr0Gsa5Iy9be1cTIAPoM0PiRMHKxa1RMXsYo39Sa0ZTteIllfgF1qrmu9Uuj7UfA5g/6npecVJwP5ThMtEjvdqaKZOcnkXQKE2aRNxQHHRctjUiM2tAbij7lnhgsgoh+hf7CxNRhiVjLLA2rhcZagXC2ta/TSgNhs+kn/yGeHkf10O4drQ96Fa+jWSnKt6jYmL/UBNfC2YK3hog9zJ5UKkoFjR4ZK6kmn7vnpwj4OukPGjlNXslOTmrwUkThLbx2/1m9hFrp+8u+NneR5ZYPHLTFJu+YqPQdUdjAoP0Rq4LOwrdTrx3X8UCE3nsjOjNq3oavcM7WKAry/LSGdWVs0YbO4= # OSS_USER_NAME
+            - secure: hjv/RPj+kJJEXwf8NQMMAT1VQIoYEmOeAzLy6msDOsgdtySK23WC1Xwx/lm9P9NMPVT5kgQjAkC7B2tK+BDGD9cmf2RQ4N8xB+QdMIQafj+uGlKZjIOjyEmpRep64QfCr37uXiQE00IutER9BIjTYkT/JxAES73KK19icv7UWCRL9BLUkAIollbR6rrYsB/Rja9kJEMhMuQ+AyE5Z5JC7BqnN6O2eol2INtdRytyOxXU/dmPgF7TpFTDbsv0wLzxv25r5Rw3pkCJrqBVW+R9TTxD6ZX3g1N6Cts4j5koobMy4F9EHJE8ory+rQbnfl0YM7SQTtHixmQCFof99xQN2aIZgFsNLulSS3WhdHDE3/GLulrGJRJCH5JAzApXEA43vEOU8y9HlswH8ySk5cZvbWabjwg3FVSNuR4Dyr9IkU99w46m0qSm9VVwlXlJFv7weNXQkbViA4MdxDP2qNy9oDxOz2ODocS+p8tg4eJGRYVfVRkwJHWGetM2jPVzDYmnOKOPYGH7GjDnPCMvsuAfSgjJRa8PqzXdBS2fhTDyXOySeoBTzDw04JYZ5uF+MUef02i1rpi8NDfK6WNVUhdV/3lpurRlMgtE2Eeqt4yPAY05Bc8e/HqhiZ8tsig46aKJcC66ALXQbdUB8ViQdzzzkepnmOLSOMz3kUHM6v4G3dk= # OSS_USER_SECRET
+    before_cache:
+        - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+    cache:
+        directories:
+            - $HOME/.gradle/caches/
+            - $HOME/.gradle/wrapper/
+
+    before_install: pip install --user codecov
+    install: "travis/build.sh"
+    script: "travis/deploy.sh"
+    after_success: "codecov"

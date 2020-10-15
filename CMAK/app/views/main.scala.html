@@ -1,0 +1,63 @@
+@*
+* Copyright 2015 Yahoo Inc. Licensed under the Apache License, Version 2.0
+* See accompanying LICENSE file.
+*@
+@(title: String, menu: Html, breadcrumbs: Html = Html(""), scripts: Html = Html(""))(content: Html)(implicit request: RequestHeader)
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@title</title>
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+    <link rel='stylesheet' href='@routes.Assets.at("lib/bootstrap/css/bootstrap.min.css").relative'>
+    <script>
+    @{
+    //@Html(org.webjars.RequireJS.getSetupJavaScript(routes.WebJarAssets.at("").url))
+}
+    </script>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/index.min.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("dataTables/stylesheets/dataTables.bootstrap4.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("chartist/stylesheets/chartist.min.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("lib/octicons/build/font/octicons.min.css")">
+    <script src="@routes.Assets.at("chartist/javascripts/chartist.min.js")"></script>
+</head>
+<body role="document">
+
+@menu
+
+<div class="container-fluid" role="main">
+@breadcrumbs
+@content
+</div>
+
+<script src="@routes.Assets.at("lib/jquery/jquery.js")"></script>
+<script src="@routes.Assets.at("lib/bootstrap/js/bootstrap.min.js")"></script>
+<script src="@routes.Assets.at("dataTables/javascripts/jquery.dataTables.min.js")"></script>
+<script src="@routes.Assets.at("dataTables/javascripts/dataTables.bootstrap4.js")"></script>
+
+<script>
+    function goBack() {
+        window.history.back()
+    }
+
+    function checkBoxSelect(idPrefix, booleanValue, display) {
+        $("[id^="+idPrefix+"]").prop("checked",booleanValue);
+    }
+
+    function selectBySubname(selectId, selectClass, display) {
+        var subname = $(selectId).val().toLowerCase();
+        $('.' + selectClass).not("[name*='" + subname + "']").css("display", "none");
+        $("[class='"+selectClass+"'][name*='"+subname+"']").css("display", display);
+        if (subname == "") {
+            $('.' + selectClass).css("display", display);
+        }
+    }
+
+    function disableSubmission() {
+        $('[type=submit]').prop('disabled', true);
+        $('[type=submit]').removeAttr('type');
+    }
+</script>
+@scripts
+</body>
+</html>

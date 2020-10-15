@@ -1,0 +1,41 @@
+{
+    "name": "limits",
+    "description": "Sets the limit to upload size and processing time for incoming and outgoing requests.",
+    "author": "Vinit Sacheti<vsacheti@yahoo-inc.com>",
+    "version": "1.0.0",
+    "devDependencies": {
+        "jshint": "~2.9.5",
+        "mocha": "~5.1",
+        "nyc": "^11.7",
+        "sinon": "^5.0",
+        "async": "^1.5.2"
+    },
+    "contributors": [
+        {
+            "name": "Evan Torrie",
+            "email": "evan.torrie@yahoo.com"
+        }
+    ],
+    "main": "./lib/index.js",
+    "scripts": {
+        "pretest": "jshint ./lib/",
+        "test": "nyc mocha test/unit.js test/functional.js"
+    },
+    "bugs": {
+        "url": "http://github.com/yahoo/node-limits/issues"
+    },
+    "licenses": [
+        {
+            "type": "BSD",
+            "url": "https://github.com/yahoo/node-limits/blob/master/LICENSE"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/yahoo/node-limits.git"
+    },
+    "engines": {
+        "node": ">4.x"
+    },
+    "dependencies": {}
+}

@@ -1,0 +1,11 @@
+# IDEA Project settings
+/caffe-distri.iml
+
+## Caffe
+
+src/main/java/caffe/Caffe.java
+include/jni/com_yahoo_ml_jcaffe_*.h
+.build_release
+build
+distribute
+target

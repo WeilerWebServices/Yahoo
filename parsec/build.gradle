@@ -1,0 +1,174 @@
+/**
+ * @author waynewu
+ */
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath group: 'net.researchgate'         , name: 'gradle-release'         , version: '2.8.0'
+        classpath group: 'org.kt3k.gradle.plugin'   , name: 'coveralls-gradle-plugin', version: '2.8.2'
+        classpath group: 'com.jfrog.bintray.gradle' , name: 'gradle-bintray-plugin'  , version: '1.+'
+    }
+}
+
+apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'net.researchgate.release'
+
+wrapper {
+    gradleVersion = '5.2.1'
+}
+
+allprojects {
+    group = 'com.yahoo.parsec'
+
+    apply plugin: 'java'
+    apply plugin: 'groovy'
+    apply plugin: 'jacoco'
+
+    jacocoTestReport {
+        reports {
+            xml.enabled = true
+            html.enabled = true
+        }
+    }
+
+    //Get release version, needs to be evaluated first before going into subprojects
+    if(project.properties['release.useAutomaticVersion'] == 'true'){
+        if(project.hasProperty('release.releaseVersion')) {
+            project.ext.set('release.version', project.property('release.releaseVersion'))
+        }else {
+            def releaseVersion = project.version.toString()
+            if (releaseVersion.contains('-SNAPSHOT')) {
+                releaseVersion -= '-SNAPSHOT'
+            }
+            project.ext.set('release.version', releaseVersion)
+        }
+    }
+
+    task preProcess {
+      doLast {
+        logger.info("Executing Pre Release Build Processes...")
+      }
+    }
+
+    task postProcess {
+      doLast {
+        logger.info("Executing Post Release Build Processes...")
+      }
+    }
+
+    beforeReleaseBuild.dependsOn preProcess
+    afterReleaseBuild.dependsOn postProcess
+}
+
+release {
+    failOnUnversionedFiles = false
+    failOnCommitNeeded = false
+    tagTemplate = '$name-$version'
+    newVersionCommitMessage = '[Gradle Release Plugin][ci skip] new version release:'
+}
+
+subprojects {
+    apply plugin: 'maven'
+    apply plugin: 'com.jfrog.bintray'
+    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        testCompile gradleTestKit()
+        testCompile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.4'
+        testCompile group: 'org.spockframework', name: 'spock-core', version: '1.3-groovy-2.5'
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+        testCompile group: 'cglib', name: 'cglib-nodep', version: '2.2'
+    }
+
+    bintray {
+        user = System.getenv('BINTRAY_USER')
+        key = System.getenv('BINTRAY_API_KEY')
+
+        publications = ['MyPublication']
+        publish = true
+        override = false
+
+        pkg {
+            repo = bintrayRepo
+            name = bintrayPackage
+            userOrg = 'yahoo'
+            licenses = ['Apache-2.0']
+            vcsUrl = bintrayVcsURL
+        }
+
+        pkg.version {
+            name = project.version
+        }
+    }
+
+    publishing {
+        publications {
+            MyPublication(MavenPublication) {
+                from components.java
+            }
+        }
+    }
+
+    afterReleaseBuild.dependsOn check
+    bintrayUpload.dependsOn check
+}
+
+def publishedProjects = subprojects.findAll()
+
+updateVersion {
+    doLast {
+        def releaseVersion = rootProject.property("version")
+        def apply_file = new File("parsec-template-plugin/installation/apply.groovy")
+
+        ant.replaceregexp(file: apply_file, match: "\"com.yahoo.parsec:parsec-template-plugin:\\S+\"",
+                replace: "\"com.yahoo.parsec:parsec-template-plugin:${releaseVersion}\"" )
+
+        def readme = new File("parsec-gradle-plugin/README.md")
+        ant.replaceregexp(file: readme, match: "version : '\\S+'", replace: "version : '${releaseVersion}'")
+
+        def gradleProp = new File("parsec-base-build/src/main/resources/gradle.properties")
+        ant.replaceregexp(file: gradleProp, match: "parsecGradleVersion = \\S+",
+                replace: "parsecGradleVersion: ${releaseVersion}")
+    }
+}
+
+task jacocoRootReport (type: JacocoReport, group: 'Coverage reports'){
+    description = 'Generates an aggregate report from all subprojects'
+    dependsOn(publishedProjects.test)
+
+    additionalSourceDirs = files(publishedProjects.sourceSets.main.allSource.srcDirs)
+    sourceDirectories = files(publishedProjects.sourceSets.main.allSource.srcDirs)
+    classDirectories = files(publishedProjects.sourceSets.main.output)
+    executionData = files(publishedProjects.jacocoTestReport.executionData)
+
+    reports {
+        html.enabled = true
+        xml.enabled = true
+    }
+
+    doFirst {
+        executionData = files(executionData.findAll { it.exists() })
+    }
+}
+
+coveralls {
+    sourceDirs = publishedProjects.sourceSets.main.allSource.srcDirs.flatten()
+    jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/jacocoRootReport.xml"
+
+}
+
+tasks.coveralls {
+    dependsOn(jacocoRootReport)
+}
+

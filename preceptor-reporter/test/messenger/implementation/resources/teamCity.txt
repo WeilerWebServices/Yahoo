@@ -1,0 +1,7 @@
+##teamcity[testSuiteStarted name='test-suite']
+##teamcity[testStarted name='test-case']
+##teamcity[testFinished name='test-case' duration='23']
+##teamcity[testFailed name='test-case' message='Division by zero' details='You should not do that']
+##teamcity[testFailed name='test-case' message='Item does not exist' details='Check for being null' error='true']
+##teamcity[testIgnored name='test-case' message='DB wasn|'t there']
+##teamcity[testSuiteFinished name='test-suite']

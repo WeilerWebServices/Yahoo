@@ -1,0 +1,61 @@
+.\"	This manual page was originally written by Jan Schaumann
+.\"	<jschauma@yahoo-inc.com> in September 2009.
+.Dd September 26, 2013
+.Dt YVIP 5
+.Os
+.Sh NAME
+.Nm yvip
+.Nd VIP configuration file
+.Sh DESRIPTION
+This manual page describes the configuration file syntax for files used by
+the
+.Pa /usr/local/etc/rc.d/yvip
+system startup script.
+These files are found under
+.Pa /usr/local/etc/yvip/vips
+and may contain any number of VIP configurations.
+By convention in version 3.0 and above, the
+.Pa yvipagent
+package installs all VIP configuration into
+.Pa /usr/local/etc/yvip/vips/config .
+.Pp
+The syntax of these configuration files is as follows:
+.Bl -bullet -compact -offset indent
+.It
+empty lines are ignored
+.It
+anything including and following the '#' character is ignored
+.It
+all other content must be in the format
+.Dv ip[=dscp]
+.It
+any other content is a syntax error 
+.El
+.Sh EXAMPLES
+.Pp
+The following example configures a traditional DSR VIP on the address
+66.163.166.28, the IP address 69.147.125.65 for participation in an L3 DSR
+VIP using the DSCP value 41, as well as the IP address 69.147.125.66 for
+participation in an L3 DSR VIP using the DSCP value 42:
+.Bd -literal
+66.163.166.28
+69.147.125.65=41
+69.147.125.66=42
+.Ed
+.Pp
+Note that the
+.Dv key=value
+pairs are unquoted.
+.Sh HISTORY
+The
+.Nm
+maintainer is
+.An Ben Haga
+.Aq bhaga@yahoo-inc.com .
+.Pp
+The
+.Nm
+utility was originally written by
+.An Jan Schaumann
+.Aq jschauma@yahoo-inc.com
+in September 2009.

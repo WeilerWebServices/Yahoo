@@ -1,0 +1,63 @@
+{
+  "name": "fluxible-action-utils",
+  "description": "utility methods to aid in writing actions for fluxible based applications.",
+  "version": "0.2.4",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yahoo/fluxible-action-utils.git"
+  },
+  "bugs": "https://github.com/yahoo/fluxible-action-utils/issues",
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "jenkins-mocha tests/unit --recursive --timeout 10000"
+  },
+  "dependencies": {
+    "run-auto": "^1.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.0.2",
+    "coveralls": "^3.0.0",
+    "create-react-class": "^15.6.0",
+    "eslint": "^7.0.0",
+    "jenkins-mocha": "^8.0.0",
+    "jsdom": "^16.2.2",
+    "mockery": "^2.0.0",
+    "pre-commit": "^1.2.2",
+    "prop-types": "^15.5.10",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "run-series": "^1.1.4",
+    "sinon": "^9.0.2",
+    "webpack": "^4.5.0"
+  },
+  "author": "Mo Kouli <mkouli@yahoo-inc.com>",
+  "contributors": [
+    {
+      "name": "Daniel Hood",
+      "email": "dhood@yahoo-inc.com"
+    },
+    {
+      "name": "Matias Giachino",
+      "email": "matias@yahoo-inc.com"
+    }
+  ],
+  "licenses": [
+    {
+      "type": "BSD",
+      "url": "https://github.com/yahoo/fluxible-action-utils/blob/master/LICENSE.md"
+    }
+  ],
+  "keywords": [
+    "yahoo",
+    "flux",
+    "fluxible",
+    "async",
+    "react"
+  ],
+  "pre-commit": [
+    "lint",
+    "devtest"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "preset": "google",
+  "esnext": true,
+  "jsDoc": false,
+  "maximumLineLength": {
+    "value": 90,
+    "tabSize": 2,
+    "allowRegex": true,
+    "allowComments": true,
+    "allExcept": ["regex", "comments", "require", "functionSignature"]
+  },
+  "excludeFiles": [
+    "build/**",
+    "*.md"
+  ]
+}

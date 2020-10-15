@@ -1,0 +1,58 @@
+{
+  "name": "badge-up",
+  "version": "2.3.0",
+  "description": "A module that produces hot badges without the need of Cairo",
+  "main": "index.js",
+  "nyc": {
+    "reporter": [
+      "lcov",
+      "text"
+    ]
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "test": "nyc --report-dir ./artifacts/coverage mocha --color true",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:yahoo/badge-up.git"
+  },
+  "homepage": "https://github.com/yahoo/badge-up",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "bugs": "https://github.com/yahoo/badge-up/issues",
+  "keywords": [
+    "badge",
+    "yahoo"
+  ],
+  "license": "BSD-3-Clause",
+  "author": "St. John Johnson <stjohn@yahoo-inc.com>",
+  "contributors": [
+    "Darren Matsumoto <bobafett@yahoo-inc.com>",
+    "Drew Folta <folta@yahoo-inc.com>",
+    "Noah Katzman <nkatzman@yahoo-inc.com>",
+    "Peter Peterson <petey@yahoo-inc.com>",
+    "Robert Ames <rames@yahoo-inc.com>"
+  ],
+  "release": {
+    "debug": false,
+    "verifyConditions": {
+      "path": "./node_modules/semantic-release/src/lib/plugin-noop.js"
+    }
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "coveralls": "^3.0.11",
+    "eslint": "^6.8.0",
+    "mocha": "^7.1.1",
+    "nyc": "^15.0.0",
+    "sinon": "^9.0.1"
+  },
+  "dependencies": {
+    "css-color-names": "~1.0.1",
+    "dot": "^1.1.3",
+    "svgo": "^1.3.2"
+  }
+}

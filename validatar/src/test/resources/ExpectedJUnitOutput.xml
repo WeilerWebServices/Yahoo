@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<testsuites>
+  <testsuite tests="2" name="Do nothing">
+    <testcase name="ALPHA"/>
+    <testcase name="Checking alpha"/>
+  </testsuite>
+  <testsuite tests="5" name="Simple examples">
+    <testcase name="ALPHA"/>
+    <testcase name="BETA"/>
+    <testcase name="FAIL">
+      <failed><![CDATA[Query had a typo]]></failed>
+    </testcase>
+    <testcase name="Checking alpha"/>
+    <testcase name="Checking beta">
+      <failed><![CDATA[
+Long description of the second query
+Sample fail message]]></failed>
+    </testcase>
+  </testsuite>
+  <testsuite tests="6" name="Validatar Example">
+    <testcase name="PL"/>
+    <testcase name="XY"/>
+    <testcase name="TEST"/>
+    <testcase name="Pageview and logged in">
+      <skipped/><![CDATA[
+Pageview and logged in events are present, and correct relationships.
+Another multiline 
+fail 
+message]]>
+    </testcase>
+    <testcase name="Second query"/>
+    <testcase name="Third query"/>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,137 @@
+version: 4
+shared:
+  environment:
+    CHANGELOG_FILENAME: docs/source/topic/changelog.md
+    PACKAGE_DIRECTORY: redislite
+
+jobs:
+  validate_test:
+    template: python/validate_unittest
+    requires: [~commit, ~pr]
+
+  validate_lint:
+    template: python/validate_lint
+    requires: [~commit, ~pr]
+
+  validate_codestyle:
+    template: python/validate_codestyle
+    requires: [~commit, ~pr]
+
+  validate_documentation:
+    template: python/documentation
+    environment:
+      DOCUMENTATION_PUBLISH: False
+    requires: [~commit, ~pr]
+  
+  pkg_sdist:
+    template: python/package_python
+    environment:
+      PACKAGE_TYPES: sdist
+      PUBLISH: False
+    requires: [~commit, ~pr]
+
+  pkg_ml1_64:
+    template: python/package_python
+    image: manylinux1_64
+    environment:
+      PACKAGE_TYPES: wheel
+      PUBLISH: False
+    requires: [~commit, ~pr]
+
+  pkg_ml2010:
+    template: python/package_python
+    image: manylinux2010
+    environment:
+      PACKAGE_TYPES: wheel
+      PUBLISH: False
+    requires: [~commit, ~pr]
+
+  pkg_ml2014:
+    template: python/package_python
+    image: manylinux2014
+    environment:
+      PACKAGE_TYPES: wheel
+      PUBLISH: False
+    requires: [~commit, ~pr]
+    
+  generate_version:
+    template: python/generate_version
+    requires: [~commit]
+
+  publish_test_pypi:
+    template: python/package_python
+    environment:
+      PACKAGE_TAG: False
+      PUBLISH: True
+      TWINE_REPOSITORY_URL: https://test.pypi.org/legacy/
+    requires: [validate_test, validate_lint, validate_codestyle, validate_documentation, pkg_sdist, pkg_ml1_64, pkg_ml2010, pkg_ml2014, generate_version]
+
+  publish_test_pypi_ml1:
+    template: python/package_python
+    image: manylinux1_64
+    environment:
+      PACKAGE_TAG: False
+      PACKAGE_TYPES: wheel
+      PUBLISH: True
+      TWINE_REPOSITORY_URL: https://test.pypi.org/legacy/
+    requires: [validate_test, validate_lint, validate_codestyle, validate_documentation, pkg_sdist, pkg_ml1_64, pkg_ml2010, pkg_ml2014, generate_version]
+
+  publish_test_pypi_ml2014:
+    template: python/package_python
+    image: manylinux2014
+    environment:
+      PACKAGE_TAG: False
+      PACKAGE_TYPES: wheel
+      PUBLISH: True
+      TWINE_REPOSITORY_URL: https://test.pypi.org/legacy/
+    requires: [validate_test, validate_lint, validate_codestyle, validate_documentation, pkg_sdist, pkg_ml1_64, pkg_ml2010, pkg_ml2014, generate_version]
+
+  verify_test_pkg:
+    template: python/validate_pypi_package
+    environment:
+        PYPI_INDEX_URL: https://test.pypi.org/simple
+    requires: [publish_test_pypi]
+
+  verify_test_pkg_ml1:
+    template: python/validate_pypi_package
+    image: manylinux1_64
+    environment:
+        PYPI_INDEX_URL: https://test.pypi.org/simple
+    requires: [publish_test_pypi_ml1]
+  
+  verify_test_pkg_ml2014:
+    template: python/validate_pypi_package
+    image: manylinux2014
+    environment:
+        PYPI_INDEX_URL: https://test.pypi.org/simple
+    requires: [publish_test_pypi_ml2014]
+    
+  publish_documentation:
+    template: python/documentation
+    requires: [verify_test_pkg, verify_test_pkg_ml1, verify_test_pkg_ml2014]
+
+  publish_pypi:
+    # This template runs in a manylinux2010 container and
+    # publishes manylinux2010 wheels
+    template: python/package_python
+    environment:
+      PUBLISH: True
+    requires: [verify_test_pkg, verify_test_pkg_ml1, verify_test_pkg_ml2014]
+
+  publish_pypi_ml1_64:
+    template: python/package_python
+    image: manylinux1_64
+    environment:
+      PACKAGE_TAG: False
+      PACKAGE_TYPES: wheel
+      PUBLISH: True
+    requires: [verify_test_pkg, verify_test_pkg_ml1, verify_test_pkg_ml2014]
+    
+  publish_pypi_ml2014:
+    template: python/package_python
+    image: manylinux2014
+    environment:
+      PACKAGE_TAG: False
+      PACKAGE_TYPES: wheel
+      PUBLISH: True
+    requires: [verify_test_pkg, verify_test_pkg_ml1, verify_test_pkg_ml2014]

@@ -1,0 +1,63 @@
+/*
+ * Copyright 2015, Yahoo Inc.
+ * Copyrights licensed under the Apache 2.0 License.
+ * See the accompanying LICENSE file for terms.
+ */
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.3"
+
+    packagingOptions {
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+        }
+        androidTest {
+            java.srcDirs = ['src']
+        }
+    }
+
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        squidbPlugins : 'com.yahoo.squidb.json.JSONPlugin',
+                        squidbOptions : 'androidModels'
+                ]
+            }
+        }
+        testInstrumentationRunner "com.yahoo.squidb.android.SquidInstrumentationTestRunner"
+    }
+}
+
+dependencies {
+    androidTestCompile('com.android.support.test:runner:0.5') {
+        exclude group: 'com.android.support'
+    }
+
+    compile project(':squidb')
+    compile project(':squidb-android')
+    compile project(':squidb-annotations')
+    compile project(':squidb-json-plugin')
+    compile project(':squidb-json-annotations')
+    compile project(':squidb-sqlite-bindings')
+    compile project(':squidb-reactive')
+    compile project(':squidb-recyclerview')
+    annotationProcessor project(':squidb-json-compiler')
+    annotationProcessor project(':squidb-processor')
+
+    androidTestAnnotationProcessor project(':squidb-json-compiler')
+    androidTestAnnotationProcessor project(':squidb-processor')
+
+    // The following three dependencies are used to test the squidb-json plugin
+    compile 'org.codehaus.jackson:jackson-core-asl:1.9.12'
+    compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.12'
+    compile 'com.google.code.gson:gson:2.5'
+}

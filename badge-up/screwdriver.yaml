@@ -1,0 +1,24 @@
+shared:
+  image: node:12
+
+jobs:
+  main:
+    requires: [~pr, ~commit]
+    steps:
+      - install: npm install
+      - test: npm test
+      - coverage: |
+          export CI_PULL_REQUEST=${SD_PULL_REQUEST}
+          export COVERALLS_SERVICE_NAME=screwdriver
+          cat ./artifacts/coverage/lcov.info | ./node_modules/.bin/coveralls
+    secrets:
+      # Uploading coverage information to coveralls
+      - COVERALLS_REPO_TOKEN
+  publish:
+    requires: [main]
+    template: screwdriver-cd/semantic-release
+    secrets:
+      # Publishing to NPM
+      - NPM_TOKEN
+      # Pushing tags to Git
+      - GH_TOKEN

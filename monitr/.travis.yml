@@ -1,0 +1,14 @@
+language: node_js
+sudo: false
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-4.9
+      - g++-4.9
+env: CXX=g++-4.9 CC=gcc-4.9
+node_js:
+    - "10"
+    - "12"
+    - "13"

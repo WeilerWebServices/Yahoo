@@ -1,0 +1,42 @@
+Open Source Credits
+-------------------
+SquiDB makes use of the following open-source components in whole or in part. You can find the source code of their open source projects along with license information below. We acknowledge and are grateful to these developers for their contributions to the open source community.
+
+*
+
+The Android Open Source project
+https://source.android.com/source/index.html
+Copyright (C) 2008 -- The Android Open Source Project
+License: Apache 2.0
+
+*
+
+Parts of SquiDB adapted from:
+sql-dsl
+http://code.google.com/p/sql-dsl/
+Copyright (C) 2009 -- skyairmj@gmail.com
+License: Apache 2.0
+
+*
+
+squidb-processor uses apt-utils from:
+java-traits
+https://github.com/sbosley/java-traits
+Copyright (C) 2014 -- Yahoo, Inc.
+License: Apache 2.0
+
+*
+
+squidb-sqlite-bindings uses the SQLite Android Bindings
+https://www.sqlite.org/android/doc/trunk/www/index.wiki
+Copyright (C) 2008 -- The Android Open Source Project
+Modifications made by the SQLite developers, sqlite-dev@sqlite.org
+License: Apache 2.0
+
+*
+
+Parts of squidb-reactive were inspired by:
+SQLBrite
+https://github.com/square/sqlbrite
+Copyright (C) 2015 Square, Inc.
+License: Apache 2.0

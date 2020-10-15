@@ -1,0 +1,56 @@
+There
+#|# version 1 #|#
+#|# suiteStart ["1",null,"All Tests"] #|#
+#|# itemData [null,"{\"test\":234, \"test2\":{\"hello\":\"there\"}}"] #|#
+should
+#|# itemData [null,"{\"test2\":{\"what\":\"is this?\"}}"] #|#
+#|# itemMessage [null,"This is a test message for the root"] #|#
+#|# testStart ["5","1","1. Test - success"] #|#
+be some
+#|# testPassed ["5"] #|#
+#|# itemData ["5","{\"item\":23}"] #|#
+#|# itemMessage ["5","This is a test message for item 5"] #|#
+#|# testStart ["6","1","2. Test - skipped"] #|#
+#|# testSkipped ["6","I guess DB wasn't there"] #|#
+#|# suiteStart ["2","1","Sub-Group 1"] #|#
+#|# testStart ["7","2","3. Test - success"] #|#
+output
+#|# testPassed ["7"] #|#
+#|# suiteStart ["4","2","Sub-Group 1.1"] #|#
+#|# testStart ["8","4","4. Test - success"] #|#
+#|# testPassed ["8"] #|#
+#|# testStart ["10","4","5. Test - failed"] #|#
+#|# testFailed ["10","Is not equal to something","Because it is not equal"] #|#
+#|# testStart ["11","4","6. Test - error"] #|#
+all
+#|# testError ["11","Some kind of exception","For whatever reason"] #|#
+#|# testStart ["12","4","7. Test - undefined"] #|#
+#|# testUndefined ["12"] #|#
+#|# testStart ["13","4","8. Test - skipped"] #|#
+#|# testSkipped ["13","I guess DB wasn't there"] #|#
+over the
+#|# testStart ["14","4","9. Test - incomplete"] #|#
+#|# testIncomplete ["14"] #|#
+#|# suiteEnd ["4"] #|#
+#|# suiteEnd ["2"] #|#
+place, but
+#|# suiteStart ["3","1","Sub-Group 2"] #|#
+#|# testStart ["9","3","10. Test - success"] #|#
+should
+#|# testPassed ["9"] #|#
+result into
+#|# suiteEnd ["3"] #|#
+#|# testStart ["15","1","11. Test - failed"] #|#
+#|# testFailed ["15","Is not equal to something","Because it is not equal"] #|#
+#|# testStart ["16","1","12. Test - error"] #|#
+one place
+#|# testError ["16","Some kind of exception","For whatever reason"] #|#
+#|# testStart ["17","1","13. Test - undefined"] #|#
+in the
+#|# testUndefined ["17"] #|#
+#|# testStart ["18","1","14. Test - skipped"] #|#
+#|# testSkipped ["18","I guess DB wasn't there"] #|#
+#|# testStart ["19","1","15. Test - incomplete"] #|#
+#|# testIncomplete ["19"] #|#
+#|# suiteEnd ["1"] #|#
+end

@@ -1,0 +1,39 @@
+{
+  "data": {
+    "id": "4",
+    "type": "parent",
+    "attributes": {
+      "firstName": "Goran",
+      "lastName": "Tang",
+      "age": 55,
+      "deceased": false
+    },
+    "relationships": {
+      "spouse": {
+        "data": {
+          "id": "5",
+          "type": "parent"
+        }
+      },
+      "otherSpouses": {
+        "data": []
+      },
+      "friends": {
+        "data": [
+          {
+            "id": "3",
+            "type": "parent"
+          }
+        ]
+      },
+      "children": {
+        "data": [
+          {
+            "id": "5",
+            "type": "child"
+          }
+        ]
+      }
+    }
+  }
+}

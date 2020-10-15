@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+require 'github_sync'
+require 'yaml_parser'
+
+if ARGV.empty?
+  puts 'Please specify valid yaml file in argunment.'
+  exit
+end
+
+@yaml = YamlParser.new(yaml_file: ARGV[0])
+
+@client = GithubSync.new(
+  ghe_host: @yaml.ghe_host,
+  git_dir: @yaml.git_dir,
+  ghe_token: @yaml.ghe_token,
+  github_token: @yaml.github_token)
+
+repo_list = @yaml.repo_list
+
+repo_list.each do |full_repo_name|
+  org, repo = full_repo_name.split('/')
+  @client.sync_repo(org, repo)
+end

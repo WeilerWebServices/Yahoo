@@ -1,0 +1,49 @@
+{
+  "name": "routr",
+  "version": "2.1.2",
+  "description": "A router for both server and client",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/yahoo/routr.git"
+  },
+  "scripts": {
+    "cover": "node node_modules/istanbul/lib/cli.js cover --dir artifacts -- ./node_modules/mocha/bin/_mocha tests/unit/ --recursive --reporter spec",
+    "lint": "eslint .",
+    "test": "mocha tests/unit/ --recursive --require babel-register --require babel-polyfill --reporter spec"
+  },
+  "author": "Lingyan Zhu <lingyan@yahoo-inc.com",
+  "licenses": [
+    {
+      "type": "BSD",
+      "url": "https://github.com/yahoo/routr/blob/master/LICENSE.md"
+    }
+  ],
+  "dependencies": {
+    "debug": "^2.0.0",
+    "path-to-regexp": "^1.1.1",
+    "query-string": "^5.0.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.2",
+    "babel-polyfill": "^6.13.0",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-register": "^6.14.0",
+    "chai": "^4.0.1",
+    "coveralls": "^3.0.0",
+    "eslint": "^6.0.0",
+    "eslint-plugin-babel": "^5.0.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^7.0.1",
+    "pre-commit": "^1.0.7",
+    "sinon": "^8.0.0"
+  },
+  "pre-commit": [
+    "lint",
+    "test"
+  ],
+  "keywords": [
+    "yahoo",
+    "router"
+  ]
+}

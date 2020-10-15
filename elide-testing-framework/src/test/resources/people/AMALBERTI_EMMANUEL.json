@@ -1,0 +1,57 @@
+{
+  "data": {
+    "id": "3",
+    "type": "parent",
+    "attributes": {
+      "firstName": "Emmanuel",
+      "lastName": "Amalberti",
+      "age": 40,
+      "deceased": false
+    },
+    "relationships": {
+      "spouse": {
+        "data": null
+      },
+      "otherSpouses": {
+        "data": [
+          {
+            "id": "2",
+            "type": "parent"
+          }
+        ]
+      },
+      "friends": {
+        "data": [
+          {
+            "id": "1",
+            "type": "parent"
+          },
+          {
+            "id": "2",
+            "type": "parent"
+          },
+          {
+            "id": "4",
+            "type": "parent"
+          },
+          {
+            "id": "5",
+            "type": "parent"
+          }
+        ]
+      },
+      "children": {
+        "data": [
+          {
+            "id": "3",
+            "type": "child"
+          },
+          {
+            "id": "4",
+            "type": "child"
+          }
+        ]
+      }
+    }
+  }
+}

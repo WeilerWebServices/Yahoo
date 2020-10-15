@@ -1,0 +1,83 @@
+{
+  "name": "react-cartographer",
+  "version": "0.4.5",
+  "description": "Generic React component for displaying static maps using Yahoo, Google or Bing as a map provider.",
+  "author": "Edmond Chow <echow23@yahoo-inc.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yahoo/react-cartographer"
+  },
+  "scripts": {
+    "compile": "babel src --out-dir lib",
+    "lint": "jshint",
+    "start": "npm run serve | npm run dev",
+    "serve": "./node_modules/.bin/http-server -p 8080",
+    "dev": "webpack-dev-server --progress --colors --port 8090",
+    "test": "jenkins-mocha --require @babel/register tests/unit/*",
+    "devtest": "mocha --compilers js:babel-core/register tests/unit/* --reporter nyan",
+    "cover": "node node_modules/istanbul/lib/cli.js cover --dir artifacts -- ./node_modules/mocha/bin/_mocha tests/ --recursive --reporter spec",
+    "prepublish": "npm run compile"
+  },
+  "dependencies": {
+    "lodash": "4",
+    "prop-types": "15",
+    "react": "^16.8.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.4.4",
+    "chai": "^4.0.2",
+    "coveralls": "^3.0.0",
+    "debug": "^4.0.0",
+    "grunt": "1",
+    "grunt-babel": "^8.0.0",
+    "grunt-cli": "1",
+    "grunt-concurrent": "^3.0.0",
+    "grunt-contrib-clean": "^2.0.0",
+    "grunt-contrib-copy": "1",
+    "grunt-nodemon": "0.4",
+    "grunt-webpack": "3",
+    "http-server": "~0.11.0",
+    "istanbul": "0.4",
+    "jenkins-mocha": "^8.0.0",
+    "jshint": "2",
+    "json-loader": "0",
+    "mocha": "^6.0.0",
+    "nodemon": "1",
+    "react-dom": "^16.8.1",
+    "webpack": "^4.0.0",
+    "webpack-dev-server": "^3.0.0"
+  },
+  "precommit": [
+    "lint",
+    "devtest"
+  ],
+  "yhint": {
+    "excludes": [
+      "tests",
+      "artifacts",
+      "ARTIFACTS_DIR"
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/yahoo/react-cartographer/issues",
+    "email": "echow23@yahoo-inc.com"
+  },
+  "keywords": [
+    "react",
+    "react-component",
+    "isomorphic",
+    "map",
+    "maps",
+    "visualization",
+    "yahoo maps",
+    "google maps",
+    "gmaps",
+    "bing maps"
+  ],
+  "contributors": [],
+  "license": "BSD-3-Clause"
+}

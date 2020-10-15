@@ -1,0 +1,2 @@
+include README.md
+include pythonenv/package_metadata.json

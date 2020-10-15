@@ -1,0 +1,28 @@
+{
+    "name": "bigfig",
+    "version": "0.1.0",
+    "description": "configs that vary based on multiple considerations",
+    "keywords": [
+        "config",
+        "configuration",
+        "dimensions",
+        "context",
+        "NODE_ENV"
+    ],
+    "author": "Drew Folta <drew@folta.net>",
+    "dependencies": {},
+    "devDependencies": {
+        "istanbul": "^0.3.17",
+        "mocha": "^2.2.5"
+    },
+    "scripts": {
+        "test": "istanbul cover _mocha -- tests/index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/yahoo/node-bigfig.git"
+    },
+    "homepage": "http://github.com/yahoo/node-bigfig/",
+    "bugs": "http://github.com/yahoo/node-bigfig/issues",
+    "license": "MIT"
+}

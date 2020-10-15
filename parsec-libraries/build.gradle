@@ -1,0 +1,127 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+'
+    }
+}
+
+plugins {
+    id 'net.researchgate.release' version '2.5.0'
+}
+
+release {
+    failOnUnversionedFiles = false
+    failOnCommitNeeded = false
+    tagTemplate = '$name-$version'
+    newVersionCommitMessage = '[Gradle Release Plugin][ci skip] new version release:'
+}
+
+ext.'ossrhUsername' = System.env.OSS_USER
+ext.'ossrhPassword' = System.env.OSS_PW
+
+wrapper {
+    gradleVersion = '5.2.1'
+}
+
+allprojects {
+
+    group = 'com.yahoo.parsec'
+
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
+    apply plugin: 'maven'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+}
+
+subprojects {
+    apply plugin: 'com.jfrog.bintray'
+
+    def pomConfig = {
+        licenses {
+            license {
+                name "The Apache Software License, Version 2.0"
+                url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                distribution "repo"
+            }
+        }
+        developers {
+            developer {
+                id "ec-lightyear-dev"
+                name "ec-lightyear-dev"
+                email "ec-lightyear-dev@oath.com"
+            }
+        }
+	    scm {
+	        connection 'scm:git:https://github.com/yahoo/parsec-libraries.git'
+	        developerConnection 'scm:git:https://github.com/yahoo/parsec-libraries.git'
+	        url 'https://github.com/yahoo/parsec-libraries/'
+	    }
+    }
+
+    bintray {
+        user = System.getenv('BINTRAY_USER_ME')
+        key = System.getenv('BINTRAY_API_KEY_ME')
+        publications = ['UnofficialPublication']
+
+        publish = true
+        override = false
+        pkg {
+            repo = bintrayRepo
+            name = project.name
+            desc = 'Parsec Libraries and Utilities'
+            websiteUrl = 'https://github.com/yahoo/parsec-libraries'
+            issueTrackerUrl = 'https://github.com/yahoo/parsec-libraries/issues'
+            userOrg = 'yahoo'
+            licenses = ['Apache-2.0']
+            vcsUrl = parsecVcsUrl
+        }
+
+        pkg.version {
+            name = version
+            gpg {
+                sign = true
+            }
+            mavenCentralSync {
+                sync = true
+                user = ossrhUsername
+                password = ossrhPassword
+            }
+        }
+    }
+
+    task javadocJar(type: Jar) {
+        classifier = 'javadoc'
+        from javadoc
+    }
+
+    task sourcesJar(type: Jar) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    publishing {
+        publications {
+            UnofficialPublication(MavenPublication) {
+                from components.java
+                artifact javadocJar
+                artifact sourcesJar
+                pom.withXml {
+                    def root = asNode()
+                    root.appendNode('description', 'The Parsec Libraries provides for web service build.')
+                    root.appendNode('name', project.name)
+                    root.appendNode('url', 'https://github.com/yahoo/parsec-libraries')
+                    root.children().last() + pomConfig
+                }
+            }
+        }
+    }
+
+    bintrayUpload.dependsOn check
+    afterReleaseBuild.dependsOn check
+}

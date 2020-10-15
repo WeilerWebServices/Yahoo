@@ -1,0 +1,87 @@
+buildscript{
+    repositories{
+        maven{
+            url "https://plugins.gradle.org/m2/"
+        }
+        jcenter()
+    }
+    dependencies{
+        classpath group: 'com.gradle.publish', name: 'plugin-publish-plugin', version: project.property('packageVersion.plugin-publish-plugin')
+    }
+}
+
+apply plugin: 'pmd'
+apply plugin: "com.gradle.plugin-publish"
+
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile gradleApi()
+    compile group: 'org.apache.commons', name: 'commons-compress', version: project.property('packageVersion.commons-compress')
+    compile group: 'commons-codec'     , name: 'commons-codec'   , version: project.property('packageVersion.commons-codec')
+    compile group: 'org.testng'        , name: 'testng'          , version: project.property('packageVersion.testng')
+}
+
+pluginBundle {
+    website = 'http://www.gradle.org/' //TODO: replace with official link
+    vcsUrl = 'https://github.com/gradle/gradle' //TODO: replace with official github
+    description = 'Parsec gradle plugin'
+    tags = ['gradle-plugin', 'parsec']
+    plugins {
+        parsecGradlePlugin {
+            id = 'com.yahoo.parsec.gradle-plugin'
+            displayName = 'Parsec Gradle Plugin'
+        }
+    }
+}
+
+task downloadParsecRdlGenerator(type: Exec) {
+
+    commandLine "sh", "./download_parsec_rdl_generator.sh", project.property("parsecRdlGeneratorVersion"), projectDir.absolutePath
+    outputs.upToDateWhen {
+        //Return upToDate when rdl_gen version matches
+        def flag = false
+        try {
+            def line = new File("${projectDir.absolutePath}/src/main/resources/rdl-gen/metadata.xml").readLines().get(0)
+            flag = (line && line == project.property("parsecRdlGeneratorVersion"))
+        } finally {
+            return flag
+        }
+    }
+}
+
+task downloadRdlBinary(type: Exec) {
+    def osName = System.getProperty("os.name").equals("Mac OS X") ? "darwin" : "linux";
+    commandLine "sh", "./download_parsec_rdl.sh", project.property("parsecRdlVersion"), project.property("parsecRdlExecFileVersion"), projectDir.absolutePath, osName
+    outputs.upToDateWhen {
+
+        //Return upToDate when parsec_rdl version matches
+        def flag = false
+        try {
+            def line = new File("${projectDir.absolutePath}/src/main/resources/rdl-bin/metadata.xml").readLines().get(0)
+            flag = (line && line == project.property("parsecRdlVersion"))
+        } finally {
+            return flag
+        }
+    }
+
+}
+
+pmd {
+    toolVersion = "6.8.0"
+    ignoreFailures = true
+    consoleOutput = true
+    ruleSetFiles = files("${projectDir.absolutePath}/config/pmd/ruleSets.xml")
+    ruleSets = []
+}
+
+compileJava.dependsOn downloadRdlBinary
+compileJava.dependsOn downloadParsecRdlGenerator
+test.dependsOn downloadParsecRdlGenerator
+test.dependsOn downloadRdlBinary

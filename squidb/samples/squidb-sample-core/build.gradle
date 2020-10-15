@@ -1,0 +1,51 @@
+/*
+ * Copyright 2015, Yahoo Inc.
+ * Copyrights licensed under the Apache 2.0 License.
+ * See the accompanying LICENSE file for terms.
+ */
+
+apply plugin: 'com.android.library'
+
+def generateIOSModels() {
+    // this environment variable is set by the Settings.xcconfig for IOS builds
+    !"$System.env.SQUIDB_IOS_SRC".isEmpty() && System.env.SQUIDB_IOS_SRC != null;
+}
+
+String squidbOptionsString = ''
+if (!generateIOSModels()) {
+    squidbOptionsString += 'androidModels'
+}
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.3"
+
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [squidbOptions : squidbOptionsString]
+            }
+        }
+        minSdkVersion 14
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':squidb')
+    compile project(':squidb-annotations')
+    annotationProcessor project(':squidb-processor')
+
+    if (!generateIOSModels()) {
+        compile project(':squidb-android')
+    }
+}

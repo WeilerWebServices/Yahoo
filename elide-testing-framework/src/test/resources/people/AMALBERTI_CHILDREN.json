@@ -1,0 +1,63 @@
+{
+  "data": [
+    {
+      "id": "3",
+      "type": "child",
+      "attributes": {
+        "firstName": "Rebekah",
+        "lastName": "Amalberti",
+        "age": 12,
+        "deceased": false
+      },
+      "relationships": {
+        "parents": {
+          "data": [
+            {
+              "id": "3",
+              "type": "parent"
+            }
+          ]
+        },
+        "playmates": {
+          "data": []
+        }
+      }
+    },
+    {
+      "id": "4",
+      "type": "child",
+      "attributes": {
+        "firstName": "Dove",
+        "lastName": "Amalberti",
+        "age": 11,
+        "deceased": false
+      },
+      "relationships": {
+        "parents": {
+          "data": [
+            {
+              "id": "3",
+              "type": "parent"
+            }
+          ]
+        },
+        "playmates": {
+          "data": [
+            {
+              "id": "1",
+              "type": "child"
+            },
+            {
+              "id": "2",
+              "type": "child"
+            },
+            {
+              "id": "3",
+              "type": "child"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

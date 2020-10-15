@@ -1,0 +1,58 @@
+{
+  "name": "fluxible-immutable-utils",
+  "author": "dhood@yahoo-inc.com",
+  "description": "A collection of utilities that provide convenience methods for using Immutable.js with a fluxible based application",
+  "version": "0.5.9",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yahoo/fluxible-immutable-utils"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "jenkins-mocha tests --recursive"
+  },
+  "peerDependencies": {
+    "react": "^0.14.0 || ^15.0.0 || ^16.0.0",
+    "react-dom": "^0.14.0 || ^15.0.0 || ^16.0.0"
+  },
+  "dependencies": {
+    "create-react-class": "^15.5.0",
+    "fluxible": "^1.4.0",
+    "fluxible-addons-react": "^0.2.12",
+    "immutable": "^3.8.1",
+    "inherits": "^2.0.3",
+    "shallowequal": "^1.0.1"
+  },
+  "devDependencies": {
+    "chai": "^4.0.2",
+    "coveralls": "^2.13.1",
+    "eslint": "^4.0.0",
+    "filter-invalid-dom-props": "^1.0.0",
+    "jenkins-mocha": "^4.1.2",
+    "jsx-test": "^2.0.1",
+    "pre-commit": "^1.2.2",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "sinon": "^2.3.4"
+  },
+  "pre-commit": [
+    "test"
+  ],
+  "contributors": [
+    "Mo Kouli <mkouli@yahoo-inc.com>",
+    "Marcelo Eden <eden@yahoo-inc.com>",
+    "Akshay Patel <akshayp@yahoo-inc.com>"
+  ],
+  "license": "BSD-3-Clause",
+  "keywords": [
+    "yahoo",
+    "immutable",
+    "immutablejs",
+    "immutable.js",
+    "fluxible",
+    "react",
+    "flux"
+  ]
+}

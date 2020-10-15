@@ -1,0 +1,35 @@
+@*
+* Copyright 2015 Yahoo Inc. Licensed under the Apache License, Version 2.0
+* See accompanying LICENSE file.
+*@
+@(menuTitle: String, menuItem: String, menuList: IndexedSeq[models.navigation.Menu])
+
+@import scala.Int; var i = 0;
+
+        <div class="navbar-collapse collapse">
+            <ul class="navbar-nav mr-auto">
+                @menuList.map { m =>
+                    @{i = i + 1}
+                    @if(m.items.isEmpty) {
+                        @if(m.title == menuTitle) {
+                            <li class="nav-item active"><a class="nav-link" href="@m.route.map(_.toString).getOrElse("#")">@m.title</a></li>
+                        } else {
+                            <li class="nav-item"><a class="nav-link"  href="@m.route.map(_.toString).getOrElse("#")">@m.title</a></li>
+                        }
+                    } else {
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" href="#" id="@i" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >@m.title<span class="caret"></span></a>
+                            <div class="dropdown-menu" aria-labelledby="@i">
+                            @m.items.map { case (item,route) =>
+                                @if(m.title == menuTitle && item == menuItem) {
+                                    <a class="dropdown-item active" href="@route.toString">@item</a>
+                                } else {
+                                    <a class="dropdown-item" href="@route.toString">@item</a>
+                                }
+                            }
+                            </div>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>

@@ -1,0 +1,9 @@
+artifacts
+docs
+src
+tests
+.idea
+*.log
+.coveralls
+.npmignore
+.travis.yml

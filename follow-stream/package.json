@@ -1,0 +1,33 @@
+{
+  "name": "follow-stream",
+  "version": "1.0.0",
+  "description": "folow/follow-registry as streams",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/yahoo/follow-stream.git"
+  },
+  "keywords": [
+    "follow",
+    "follow-registry",
+    "couchdb",
+    "streams"
+  ],
+  "author": "Bryan English <bryan@bryanenglish.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yahoo/follow-stream/issues"
+  },
+  "homepage": "https://github.com/yahoo/follow-stream#readme",
+  "dependencies": {
+    "follow": "^0.12.1",
+    "follow-registry": "^2.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.4",
+    "mockery": "^1.4.0"
+  }
+}

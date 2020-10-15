@@ -1,0 +1,48 @@
+{
+  "data": {
+    "id": "2",
+    "type": "parent",
+    "attributes": {
+      "firstName": "Margery",
+      "lastName": "Bonham",
+      "age": 32,
+      "deceased": false
+    },
+    "relationships": {
+      "spouse": {
+        "data": {
+          "id": "1",
+          "type": "parent"
+        }
+      },
+      "otherSpouses": {
+        "data": [
+          {
+            "id": "3",
+            "type": "parent"
+          }
+        ]
+      },
+      "friends": {
+        "data": [
+          {
+            "id": "3",
+            "type": "parent"
+          }
+        ]
+      },
+      "children": {
+        "data": [
+          {
+            "id": "1",
+            "type": "child"
+          },
+          {
+            "id": "2",
+            "type": "child"
+          }
+        ]
+      }
+    }
+  }
+}

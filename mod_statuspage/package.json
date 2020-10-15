@@ -1,0 +1,44 @@
+{
+  "name": "mod_statuspage",
+  "description": "mod_statuspage for Node",
+  "author": "Vinit Sacheti <vsacheti@yahoo.com>",
+  "version": "1.1.0",
+  "contributors": [
+    "Sylvio Marcondes <sylivom@yahoo-inc.com>"
+  ],
+  "dependencies": {
+    "bl": "^2.0.1",
+    "ejs": "^2.5.5",
+    "moment": "^2.22.2"
+  },
+  "devDependencies": {
+    "express": "^4.16.3",
+    "istanbul": "^0.4.5",
+    "jshint": "^2.9.6",
+    "vows": "^0.8.2",
+    "yui-lint": "^0.2.0"
+  },
+  "keywords": [
+    "statuspage",
+    "status",
+    "nagios"
+  ],
+  "main": "./lib/index.js",
+  "scripts": {
+    "pretest": "jshint --config ./node_modules/yui-lint/jshint.json ./lib/ ./test/",
+    "test": "istanbul cover --print both vows -- --spec ./test/*.js"
+  },
+  "bugs": {
+    "url": "http://github.com/yahoo/mod_statuspage/issues"
+  },
+  "licenses": [
+    {
+      "type": "BSD",
+      "url": "https://github.com/yahoo/mod_statuspage/blob/master/LICENSE"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/yahoo/mod_statuspage.git"
+  }
+}

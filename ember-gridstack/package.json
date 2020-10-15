@@ -1,0 +1,79 @@
+{
+  "name": "ember-gridstack",
+  "version": "2.0.2",
+  "description": "Ember Gridstack",
+  "keywords": [
+    "ember-addon",
+    "gridstack"
+  ],
+  "repository": "https://github.com/yahoo/ember-gridstack.git",
+  "license": "BSD-3-Clause",
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "authors": [
+    "Balaji Manoharan<balajim1@verizonmedia.com>",
+    "Jon Kilroy<kilroy@verizonmedia.com>",
+    "Mike Musson"
+  ],
+  "scripts": {
+    "build": "ember build --environment=production",
+    "lint:hbs": "ember-template-lint .",
+    "lint:js": "eslint .",
+    "start": "ember serve",
+    "test": "ember test",
+    "test:all": "ember try:each"
+  },
+  "dependencies": {
+    "ember-cli-babel": "^7.17.2",
+    "ember-cli-htmlbars": "^4.2.2",
+    "gridstack": "^1.1.0"
+  },
+  "devDependencies": {
+    "@ember/jquery": "^1.1.0",
+    "@ember/optional-features": "^1.3.0",
+    "@glimmer/component": "^1.0.0",
+    "@glimmer/tracking": "^1.0.0",
+    "babel-eslint": "^10.0.3",
+    "broccoli-asset-rev": "^3.0.0",
+    "ember-auto-import": "^1.5.3",
+    "ember-cli": "~3.16.0",
+    "ember-cli-dependency-checker": "^3.2.0",
+    "ember-cli-eslint": "^5.1.0",
+    "ember-cli-inject-live-reload": "^2.0.2",
+    "ember-cli-sri": "^2.1.1",
+    "ember-cli-template-lint": "^1.0.0-beta.3",
+    "ember-cli-uglify": "^3.0.0",
+    "ember-disable-prototype-extensions": "^1.1.3",
+    "ember-export-application-global": "^2.0.1",
+    "ember-load-initializers": "^2.1.1",
+    "ember-maybe-import-regenerator": "^0.1.6",
+    "ember-qunit": "^4.6.0",
+    "ember-resolver": "^7.0.0",
+    "ember-source": "~3.16.0",
+    "ember-source-channel-url": "^2.0.1",
+    "ember-try": "^1.4.0",
+    "eslint-plugin-ember": "^7.7.2",
+    "eslint-plugin-node": "^11.0.0",
+    "husky": "^4.2.3",
+    "loader.js": "^4.7.0",
+    "prettier": "^1.19.1",
+    "pretty-quick": "^2.0.1",
+    "qunit-dom": "^1.0.0"
+  },
+  "engines": {
+    "node": "10.* || >= 12"
+  },
+  "ember": {
+    "edition": "octane"
+  },
+  "ember-addon": {
+    "configPath": "tests/dummy/config"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  }
+}

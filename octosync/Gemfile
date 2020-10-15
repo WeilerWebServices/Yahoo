@@ -1,0 +1,10 @@
+source 'https://rubygems.org'
+
+gem 'berkshelf'
+gem 'rake'
+gem 'rspec'
+gem 'rspec-mocks'
+gem 'rspec_junit_formatter'
+gem 'jsonlint'
+gem 'rubocop'
+gem 'octokit'

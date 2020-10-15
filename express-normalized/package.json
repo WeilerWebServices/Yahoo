@@ -1,0 +1,34 @@
+{
+  "name": "express-normalized",
+  "author": "Dav Glass <davglass@gmail.com>",
+  "version": "1.0.0",
+  "description": "Normalize get/post vars",
+  "main": "normalized.js",
+  "scripts": {
+    "pretest": "jshint *.js ./tests/*.js",
+    "test": "jenkins-mocha ./tests/*.js",
+    "posttest": "node_modules/jenkins-mocha/node_modules/.bin/istanbul check-coverage --statements 100 --branches 100 --functions 100 --lines 100"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/yahoo/express-normalized.git"
+  },
+  "bugs": {
+    "url": "http://github.com/yahoo/express-normalized/issues"
+  },
+  "jshintConfig": {
+    "node": true
+  },
+  "keywords": [
+    "express",
+    "params",
+    "vars",
+    "normalized"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.3.0",
+    "jenkins-mocha": "^2.4.0",
+    "jshint": "^2.8.0"
+  }
+}

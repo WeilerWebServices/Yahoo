@@ -1,0 +1,16 @@
+#|# version 1 #|#
+#|# itemData ["123","[\"listItem\"]"] #|#
+#|# itemData ["123","23"] #|#
+#|# itemData ["123","only-string"] #|#
+#|# itemData ["123","{\"obj\":23}"] #|#
+#|# version 1 #|#
+#|# itemMessage ["123","This is a test-message."] #|#
+#|# suiteStart ["123","0","Suite-Name"] #|#
+#|# suiteEnd ["123"] #|#
+#|# testStart ["123","0","Test-Name"] #|#
+#|# testFailed ["123","Division by zero","You should not do that"] #|#
+#|# testError ["123","Item does not exist","Check for being null"] #|#
+#|# testPassed ["123"] #|#
+#|# testUndefined ["123"] #|#
+#|# testSkipped ["123","DB wasn't there"] #|#
+#|# testIncomplete ["123"] #|#

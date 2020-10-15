@@ -1,0 +1,26 @@
+{
+  "data": {
+    "id": "5",
+    "type": "child",
+    "attributes": {
+      "firstName": "Lim",
+      "lastName": "Tang",
+      "age": 22,
+      "deceased": false
+    },
+    "relationships": {
+      "parents": {
+        "data": [
+          {
+            "id": "4",
+            "type": "parent"
+          },
+          {
+            "id": "5",
+            "type": "parent"
+          }
+        ]
+      }
+    }
+  }
+}

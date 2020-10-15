@@ -1,0 +1,58 @@
+@*
+* Copyright 2015 Yahoo Inc. Licensed under the Apache License, Version 2.0
+* See accompanying LICENSE file.
+*@
+@import scalaz.{\/}
+@(cluster: String, errorOrForm: kafka.manager.ApiError \/ (Form[models.form.CreateTopic], kafka.manager.model.ClusterContext)
+)(implicit af: features.ApplicationFeatures, messages: play.api.i18n.Messages, menus: models.navigation.Menus, request:RequestHeader)
+
+@import helper._
+@import controllers.routes
+
+@theMenu = {
+    @views.html.navigation.clusterMenu(cluster,"Topic","Create",menus.clusterMenus(cluster)(
+        errorOrForm.toOption.map(_._2.clusterFeatures).getOrElse(kafka.manager.features.ClusterFeatures.default)))
+}
+        
+@renderForm(createTopicForm: Form[models.form.CreateTopic]) = {
+<div class="container">
+    @b4.vertical.form(routes.Topic.handleCreateTopic(cluster)) { implicit fc =>
+    <table class="table">
+        <tbody>
+        <tr>
+            <td>
+                @b4.text(createTopicForm("topic"), '_label -> "Topic", 'placeholder -> "", 'autofocus -> true )
+                @b4.text(createTopicForm("partitions"), '_label -> "Partitions", 'placeholder -> "8")
+                @b4.text(createTopicForm("replication"), '_label -> "Replication Factor", 'placeholder -> "3")
+                @b4.submit('class -> "submit-button btn btn-primary"){ Create }
+                <a href="@routes.Topic.topics(cluster)" class="cancel-button btn btn-secondary" role="button">Cancel</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @helper.repeat(createTopicForm("configs"), min = 1) { configsForm =>
+                    @b4.hidden(configsForm("name").name, configsForm("name").value.getOrElse(""))
+                    @b4.hidden(configsForm("help").name, configsForm("help").value.getOrElse(""))
+                    @b4.text(configsForm("value"), '_label -> configsForm("name").value.getOrElse(""), '_help -> configsForm("help").value.getOrElse(""))
+                }
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    }
+</div>
+}
+
+@main(
+    "Create Topic",
+    menu = theMenu,
+    breadcrumbs=views.html.navigation.breadCrumbs(models.navigation.BreadCrumbs.withViewAndCluster("Create Topic",cluster))) {
+    <div class="col-md-6 un-pad-me">
+        <div class="card">
+            <div class="card-body"><h3><button type="button" class="btn btn-link" onclick="goBack()"><span class="octicon octicon-arrow-left" aria-hidden="true"></span></button>Create Topic</h3>
+            @errorOrForm.fold( views.html.errors.onApiError(_), t => renderForm(t._1))
+            </div>
+        </div>
+    </div>
+}
+

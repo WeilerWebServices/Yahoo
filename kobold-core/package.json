@@ -1,0 +1,48 @@
+{
+  "name": "kobold-core",
+  "version": "0.9.4",
+  "description": "Core library for shared objects of the Kobold testing framework.",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "test": "istanbul cover -- _mocha test/index.js --reporter spec",
+    "docs": "yuidoc ."
+  },
+  "homepage": "https://github.com/yahoo/kobold-core",
+  "bugs": "https://github.com/yahoo/kobold-core/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yahoo/kobold-core.git"
+  },
+  "keywords": [
+    "compare",
+    "visual-diff",
+    "testing",
+    "preceptor",
+    "blink",
+    "screenshot",
+    "image"
+  ],
+  "author": {
+    "name": "Marcel Erz",
+    "email": "erz@yahoo-inc.com"
+  },
+  "dependencies": {
+    "pngjs-image": "~0.9.3",
+    "preceptor-core": "~0.9.6",
+    "blink-diff": "~1.0.7",
+    "promise": "6.0.0",
+    "request": "2.83.0",
+    "uuid": "1.4.1"
+  },
+  "devDependencies": {
+    "chai": "1.9.2",
+    "perceptualdiff": "~1.4.0",
+    "coveralls": "2.11.2",
+    "istanbul": "0.3.2",
+    "mocha": "1.21.4",
+    "sinon": "1.12.2",
+    "sinon-chai": "2.7.0",
+    "yuidocjs": "0.3.50"
+  }
+}

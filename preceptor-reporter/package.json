@@ -1,0 +1,50 @@
+{
+  "name": "preceptor-reporter",
+  "version": "0.10.1",
+  "description": "Reporting library for the preceptor test-runner and aggregator",
+  "license": "MIT",
+  "main": "index.js",
+  "homepage": "https://github.com/yahoo/preceptor-reporter",
+  "bugs": "https://github.com/yahoo/preceptor-reporter/issues",
+  "author": {
+    "name": "Marcel Erz",
+    "email": "erz@yahoo-inc.com",
+    "url": "http://www.marcelerz.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yahoo/preceptor-reporter.git"
+  },
+  "keywords": [
+    "testing",
+    "preceptor",
+    "reporter",
+    "xunit",
+    "tap",
+    "teamcity",
+    "saucelabs"
+  ],
+  "scripts": {
+    "test": "istanbul cover -- _mocha --reporter spec",
+    "docs": "yuidoc ."
+  },
+  "dependencies": {
+    "preceptor-core": "~0.10.0",
+    "glob": "7.1.2",
+    "sax": "0.6.1",
+    "promise": "6.0.0",
+    "underscore": "1.7.0",
+    "xmlbuilder": "2.4.4"
+  },
+  "devDependencies": {
+    "chai": "1.9.2",
+    "codeclimate-test-reporter": "0.0.4",
+    "coveralls": "2.11.2",
+    "cucumber": "0.4.2",
+    "istanbul": "0.3.2",
+    "mocha": "1.21.4",
+    "sinon": "1.12.2",
+    "sinon-chai": "2.7.0",
+    "yuidocjs": "0.3.50"
+  }
+}
